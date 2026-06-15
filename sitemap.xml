@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  
+  <!-- 1. Main Homepage / Tool Page -->
+  <url>
+    <loc>https://easypdfcompress.com/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- 2. FAQ Page -->
+  <url>
+    <loc>https://easypdfcompress.com/faq/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- 3. About Us Page -->
+  <url>
+    <loc>https://easypdfcompress.com/about/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 4. Contact Us Page -->
+  <url>
+    <loc>https://easypdfcompress.com/contact/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- 5. Privacy Policy Page -->
+  <url>
+    <loc>https://easypdfcompress.com/privacy-policy/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- 6. Terms of Service Page -->
+  <url>
+    <loc>https://easypdfcompress.com/terms/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+  <!-- 7. Disclaimer Page -->
+  <url>
+    <loc>https://easypdfcompress.com/disclaimer/</loc>
+    <lastmod>2026-06-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.5</priority>
+  </url>
+
+</urlset>

@@ -76,29 +76,29 @@
     </script>
 </head>
 <body>
-    <header class="header">
+<header class="header">
     <div class="container header-inner">
-        <!-- Logo par click karte hi user main page par aayega -->
+
         <a href="/" class="logo" style="text-decoration: none;">
             <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i>
             <span>EasyPDFCompress</span>
         </a>
-        
-        <!-- Yeh aapka naya aur asaan menu hai -->
+
         <nav class="main-nav">
             <ul style="display: flex; gap: 20px; list-style: none; margin: 0; align-items: center;">
                 <li><a href="/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">ホーム</a></li>
-                <li><a href="/faq/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">よくある質問</a></li>
-                <li><a href="/about/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">会社概要</a></li>
-                <li><a href="/contact/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">お問い合わせ</a></li>
+                <li><a href="/faq.html" style="text-decoration: none; color: var(--text-main); font-weight: 500;">FAQ</a></li>
+                <li><a href="/about.html" style="text-decoration: none; color: var(--text-main); font-weight: 500;">当サイトについて</a></li>
+                <li><a href="/contact.html" style="text-decoration: none; color: var(--text-main); font-weight: 500;">お問い合わせ</a></li>
             </ul>
         </nav>
-        
+
         <div class="header-controls">
             <button id="darkModeToggle" aria-label="ダークモード切替" class="btn-icon">
                 <i class="fa-solid fa-moon"></i>
             </button>
         </div>
+
     </div>
 </header>
 
@@ -276,24 +276,31 @@
 
 <footer class="footer">
     <div class="container">
+
         <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px;">
+
             <div class="footer-logo">
-                <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i> EasyPDFCompress
+                <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i>
+                EasyPDFCompress
             </div>
-            
-            <!-- Yeh saare naye pages ke links hain jo niche dikhenge -->
+
             <nav class="footer-nav">
                 <ul style="display: flex; flex-wrap: wrap; gap: 15px; list-style: none; padding: 0; margin: 0;">
-                    <li><a href="/about/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">About</a></li>
-                    <li><a href="/faq/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">FAQ</a></li>
-                    <li><a href="/contact/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Contact</a></li>
-                    <li><a href="/privacy-policy/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Privacy Policy</a></li>
-                    <li><a href="/terms/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Terms of Service</a></li>
-                    <li><a href="/disclaimer/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Disclaimer</a></li>
+                    <li><a href="/about.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">About</a></li>
+                    <li><a href="/faq.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">FAQ</a></li>
+                    <li><a href="/contact.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Contact</a></li>
+                    <li><a href="/privacy-policy.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Privacy Policy</a></li>
+                    <li><a href="/terms.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Terms</a></li>
+                    <li><a href="/disclaimer.html" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Disclaimer</a></li>
                 </ul>
             </nav>
+
         </div>
-        <p class="copyright text-center" style="margin: 0;">&copy; 2026 EasyPDFCompress. 100% Client-Side PDF Compression.</p>
+
+        <p class="copyright text-center" style="margin: 0;">
+            © 2026 EasyPDFCompress. Secure PDF Compression • 100% Client-Side Processing
+        </p>
+
     </div>
 </footer>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>

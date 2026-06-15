@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>お問い合わせ | EasyPDFCompress</title>
+    <meta name="description" content="EasyPDFCompressに関するお問い合わせはこちらから。PDF圧縮ツールのご利用方法、技術的なサポート、フィードバックを受け付けております。">
+    <link rel="canonical" href="https://easypdfcompress.com/contact/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://easypdfcompress.com/contact/">
+    <meta property="og:title" content="お問い合わせ | EasyPDFCompress">
+    <meta property="og:description" content="EasyPDFCompressに関するお問い合わせはこちら。サポートやフィードバックを受け付けております。">
+    <meta property="og:image" content="https://easypdfcompress.com/og-image.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="お問い合わせ | EasyPDFCompress">
+    
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+    <link rel="stylesheet" href="/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        .contact-form { background-color: var(--card-bg); padding: 40px; border-radius: 12px; box-shadow: var(--shadow-md); border: 1px solid var(--border-color); }
+        .form-group { margin-bottom: 20px; text-align: left; }
+        .form-label { display: block; margin-bottom: 8px; font-weight: 500; }
+        .form-control { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 6px; background-color: var(--bg-color); color: var(--text-main); font-family: inherit; font-size: 1rem; }
+        .form-control:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
+        textarea.form-control { resize: vertical; min-height: 150px; }
+        .info-card { background-color: var(--bg-light); border: 1px solid var(--border-color); padding: 25px; border-radius: 8px; margin-bottom: 20px; }
+    </style>
+</head>
+<body>
+    <main>
+        <section class="section-padding bg-light">
+            <div class="container text-center">
+                <h1 class="hero-title">お問い合わせ</h1>
+                <p class="hero-subtitle">ご質問、ご要望、不具合のご報告などお気軽にご連絡ください。</p>
+            </div>
+        </section>
+
+        <section class="section-padding container" style="max-width: 900px;">
+            <div style="display: grid; grid-template-columns: 1fr 2fr; gap: 40px;">
+                <div class="contact-info">
+                    <div class="info-card">
+                        <i class="fa-solid fa-circle-question" style="font-size: 2rem; color: var(--primary-color); margin-bottom: 15px;"></i>
+                        <h3 style="margin-bottom: 10px;">まずはFAQをチェック</h3>
+                        <p style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 15px;">多くのお問い合わせに対する回答は、よくある質問ページに掲載されています。</p>
+                        <a href="/faq/" class="btn btn-outline w-100">よくある質問を見る</a>
+                    </div>
+                    <div class="info-card">
+                        <h3 style="margin-bottom: 10px; font-size: 1.1rem;">サポート対応内容</h3>
+                        <ul style="list-style: none; padding: 0; color: var(--text-muted); font-size: 0.9rem;">
+                            <li style="margin-bottom: 8px;"><i class="fa-solid fa-bug"></i> バグ・不具合の報告</li>
+                            <li style="margin-bottom: 8px;"><i class="fa-solid fa-lightbulb"></i> 新機能のリクエスト</li>
+                            <li style="margin-bottom: 8px;"><i class="fa-solid fa-handshake"></i> ビジネス・提携のご相談</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="contact-form">
+                    <form action="#" method="POST" onsubmit="event.preventDefault(); alert('メッセージが送信されました。');">
+                        <div class="form-group">
+                            <label for="name" class="form-label">お名前</label>
+                            <input type="text" id="name" class="form-control" placeholder="山田 太郎" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="email" class="form-label">メールアドレス</label>
+                            <input type="email" id="email" class="form-control" placeholder="your@email.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="subject" class="form-label">お問い合わせ種別</label>
+                            <select id="subject" class="form-control" required>
+                                <option value="">選択してください</option>
+                                <option value="support">使い方のサポート</option>
+                                <option value="bug">不具合の報告</option>
+                                <option value="feedback">ご意見・ご要望</option>
+                                <option value="other">その他</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="message" class="form-label">メッセージ内容</label>
+                            <textarea id="message" class="form-control" placeholder="お問い合わせ内容を具体的にご記入ください。" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-large w-100">
+                            <i class="fa-regular fa-paper-plane"></i> メッセージを送信
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </main>
+    <script src="/script.js"></script>
+</body>
+</html>

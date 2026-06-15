@@ -3,7 +3,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const darkModeToggle = document.getElementById('darkModeToggle');
     const body = document.body;
     
-    // Check saved preference
     if (localStorage.getItem('theme') === 'dark' || 
         (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
         body.classList.add('dark-mode');
@@ -63,6 +62,258 @@ document.addEventListener('DOMContentLoaded', () => {
     dropzone.addEventListener('drop', (e) => {
         const dt = e.dataTransfer;
         handleFiles(dt.files);
+    }, false);
+
+    function handleFiles(files) {
+        if (files.length === 0) return;
+        const file = files[0];
+        
+        if (file.type !== 'application/pdf') {
+            alert('PDFファイルを選択してください。');
+            return;
+        }
+
+        currentFile = file;
+        
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            originalArrayBuffer = e.target.result;
+            showProcessingStep();
+        };
+        reader.readAsArrayBuffer(file);
+    }
+
+    // --- Processing Step Logic ---
+    const optionCards = document.querySelectorAll('.option-card');
+    optionCards.forEach(card => {
+        card.addEventListener('click', function() {
+            optionCards.forEach(c => c.classList.remove('selected'));
+            this.classList.add('selected');
+        });
+    });
+
+    document.getElementById('cancelBtn').addEventListener('click', resetTool);
+
+    function showProcessingStep() {
+        stepUpload.classList.remove('active');
+        stepProcessing.classList.add('active');
+        
+        document.getElementById('fileName').textContent = currentFile.name;
+        document.getElementById('fileSizeOriginal').textContent = formatBytes(currentFile.size);
+    }
+
+    // =========================================================================
+    // --- COMPRESSION ENGINE ---
+    // Strategy:
+    //   1. Use PDF.js (cdnjs) to render each page to a canvas.
+    //   2. Re-export each page as a JPEG at a quality level based on user choice.
+    //   3. Rebuild the PDF from scratch using pdf-lib, embedding the compressed images.
+    //
+    // This achieves REAL lossy compression, not just metadata stripping.
+    // For text-heavy PDFs with few/no images, file size reduction will be modest
+    // (same as any rasterization approach). For image-heavy PDFs, savings are significant.
+    //
+    // Note: Rasterizing pages means text is no longer selectable in the output.
+    // This is the standard trade-off for aggressive browser-side PDF compression
+    // without a server or WASM engine. For searchable text preservation, a server-side
+    // tool (Ghostscript, etc.) is required.
+    // =========================================================================
+
+    // Compression level settings: { jpegQuality, scale }
+    // scale: render resolution multiplier (1.0 = 96dpi equivalent, 1.5 = ~144dpi)
+    const COMPRESSION_PROFILES = {
+        low:         { jpegQuality: 0.82, scale: 1.5 },  // High quality, modest savings
+        recommended: { jpegQuality: 0.65, scale: 1.2 },  // Good balance
+        max:         { jpegQuality: 0.40, scale: 0.9 },  // Aggressive, smallest file
+    };
+
+    const compressBtn = document.getElementById('compressBtn');
+
+    compressBtn.addEventListener('click', async () => {
+        if (!originalArrayBuffer) return;
+
+        // UI Setup
+        compressBtn.disabled = true;
+        document.getElementById('cancelBtn').disabled = true;
+        const progressContainer = document.getElementById('progressContainer');
+        const progressBarFill = document.getElementById('progressBarFill');
+        const progressText = document.getElementById('progressText');
+        progressContainer.classList.remove('hidden');
+
+        const setProgress = (pct, label) => {
+            progressBarFill.style.width = `${pct}%`;
+            progressText.textContent = label || `${Math.round(pct)}%`;
+        };
+
+        try {
+            const level = document.querySelector('input[name="compressionLevel"]:checked')?.value || 'recommended';
+            const profile = COMPRESSION_PROFILES[level];
+
+            setProgress(5);
+
+            // --- Step 1: Load PDF with PDF.js ---
+            // Requires pdfjs-dist to be loaded in your HTML, e.g.:
+            // <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+            // and set: pdfjsLib.GlobalWorkerOptions.workerSrc = '...pdf.worker.min.js';
+            const pdfjsLib = window.pdfjsLib;
+            if (!pdfjsLib) {
+                throw new Error('PDF.js is not loaded. Add pdfjs-dist to your HTML before script.js.');
+            }
+
+            const loadingTask = pdfjsLib.getDocument({ data: originalArrayBuffer.slice(0) });
+            const pdfDoc_pdfjs = await loadingTask.promise;
+            const totalPages = pdfDoc_pdfjs.numPages;
+
+            setProgress(10);
+
+            // --- Step 2: Render each page to canvas and collect JPEG blobs ---
+            const pageImages = []; // Array of { jpegBytes, width, height }
+
+            for (let pageNum = 1; pageNum <= totalPages; pageNum++) {
+                const page = await pdfDoc_pdfjs.getPage(pageNum);
+                const viewport = page.getViewport({ scale: profile.scale });
+
+                const canvas = document.createElement('canvas');
+                canvas.width = Math.floor(viewport.width);
+                canvas.height = Math.floor(viewport.height);
+                const ctx = canvas.getContext('2d');
+
+                // White background (PDF default)
+                ctx.fillStyle = '#ffffff';
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                await page.render({ canvasContext: ctx, viewport }).promise;
+
+                // Convert to JPEG bytes
+                const jpegDataUrl = canvas.toDataURL('image/jpeg', profile.jpegQuality);
+                const jpegBytes = dataUrlToBytes(jpegDataUrl);
+
+                pageImages.push({
+                    jpegBytes,
+                    width: canvas.width,
+                    height: canvas.height,
+                });
+
+                // Progress: 10% → 80% across all pages
+                const pageProgress = 10 + ((pageNum / totalPages) * 70);
+                setProgress(Math.round(pageProgress));
+            }
+
+            setProgress(82);
+
+            // --- Step 3: Build new PDF with pdf-lib ---
+            const { PDFDocument } = window.PDFLib;
+            if (!PDFDocument) {
+                throw new Error('pdf-lib is not loaded. Add it to your HTML before script.js.');
+            }
+
+            const newPdf = await PDFDocument.create();
+
+            for (const { jpegBytes, width, height } of pageImages) {
+                const jpgImage = await newPdf.embedJpg(jpegBytes);
+                const page = newPdf.addPage([width, height]);
+                page.drawImage(jpgImage, { x: 0, y: 0, width, height });
+            }
+
+            setProgress(94);
+
+            // Save with object streams for tighter structure
+            const pdfBytes = await newPdf.save({ useObjectStreams: true, addDefaultPage: false });
+
+            setProgress(100);
+
+            await delay(400); // Let the user see 100%
+            showResultStep(pdfBytes, currentFile.size);
+
+        } catch (error) {
+            console.error('Compression Error:', error);
+            alert(`PDFの処理中にエラーが発生しました。\n\n詳細: ${error.message}\n\nパスワード保護されていないか確認してください。`);
+            resetTool();
+        }
+    });
+
+    // --- Result Step Logic ---
+    function showResultStep(processedBytes, originalSize) {
+        stepProcessing.classList.remove('active');
+        stepResult.classList.add('active');
+
+        const blob = new Blob([processedBytes], { type: 'application/pdf' });
+        const url = URL.createObjectURL(blob);
+
+        const compressedSize = processedBytes.byteLength;
+        const savedPercent = Math.max(0, Math.round(((originalSize - compressedSize) / originalSize) * 100));
+
+        document.getElementById('statOriginal').textContent = formatBytes(originalSize);
+        document.getElementById('statCompressed').textContent = formatBytes(compressedSize);
+        document.getElementById('statSaved').textContent = `${savedPercent}%`;
+
+        const downloadBtn = document.getElementById('downloadBtn');
+        downloadBtn.href = url;
+
+        const originalName = currentFile.name;
+        const dotIndex = originalName.lastIndexOf('.');
+        const baseName = dotIndex !== -1 ? originalName.substring(0, dotIndex) : originalName;
+        downloadBtn.download = `${baseName}_compressed.pdf`;
+
+        document.getElementById('pdfPreview').src = url;
+    }
+
+    document.getElementById('resetBtn').addEventListener('click', resetTool);
+
+    function resetTool() {
+        currentFile = null;
+        originalArrayBuffer = null;
+        fileInput.value = '';
+        
+        document.getElementById('progressContainer').classList.add('hidden');
+        document.getElementById('progressBarFill').style.width = '0%';
+        document.getElementById('progressText').textContent = '0%';
+        compressBtn.disabled = false;
+        document.getElementById('cancelBtn').disabled = false;
+        document.getElementById('pdfPreview').src = '';
+        
+        stepProcessing.classList.remove('active');
+        stepResult.classList.remove('active');
+        stepUpload.classList.add('active');
+    }
+
+    // --- Helpers ---
+    function formatBytes(bytes, decimals = 2) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const dm = decimals < 0 ? 0 : decimals;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+    }
+
+    function dataUrlToBytes(dataUrl) {
+        const base64 = dataUrl.split(',')[1];
+        const binary = atob(base64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) {
+            bytes[i] = binary.charCodeAt(i);
+        }
+        return bytes;
+    }
+
+    function delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    // --- FAQ Accordion ---
+    const faqItems = document.querySelectorAll('.faq-item');
+    faqItems.forEach(item => {
+        const btn = item.querySelector('.faq-question');
+        btn.addEventListener('click', () => {
+            const isActive = item.classList.contains('active');
+            faqItems.forEach(faq => faq.classList.remove('active'));
+            if (!isActive) {
+                item.classList.add('active');
+            }
+        });
+    });
+});        handleFiles(dt.files);
     }, false);
 
     function handleFiles(files) {

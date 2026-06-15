@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF圧縮 無料・安全なブラウザ完結ツール | EasyPDFCompress</title>
+    <meta name="description" content="サーバーへのアップロード不要。100%ローカル処理で安全にPDFのファイルサイズを小さくする無料のPDF圧縮ツールです。登録不要で今すぐPDF容量削減・軽量化が可能です。">
+    <meta name="keywords" content="PDF 圧縮, PDFサイズを小さくする, PDF 圧縮 無料, PDF 容量削減, PDF 軽量化, PDF サイズ削減">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://easypdfcompress.com/">
+    
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://easypdfcompress.com/">
+    <meta property="og:title" content="PDF圧縮 無料・安全なブラウザ完結ツール | EasyPDFCompress">
+    <meta property="og:description" content="100%ローカル処理で安全にPDFサイズを小さくする無料ツール。サーバーアップロード不要、登録不要。">
+    <meta property="og:image" content="https://easypdfcompress.com/og-image.jpg">
+    
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PDF圧縮 無料・安全なブラウザ完結ツール | EasyPDFCompress">
+    <meta name="twitter:description" content="100%ローカル処理で安全にPDFサイズを小さくする無料ツール。サーバーアップロード不要、登録不要。">
+    
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="stylesheet" href="style.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@graph": [
+            {
+                "@type": "WebSite",
+                "@id": "https://easypdfcompress.com/#website",
+                "url": "https://easypdfcompress.com/",
+                "name": "EasyPDFCompress",
+                "description": "安全で高速なブラウザ完結型PDF圧縮ツール",
+                "inLanguage": "ja"
+            },
+            {
+                "@type": "Organization",
+                "@id": "https://easypdfcompress.com/#organization",
+                "name": "EasyPDFCompress",
+                "url": "https://easypdfcompress.com/",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://easypdfcompress.com/favicon.svg"
+                }
+            },
+            {
+                "@type": "FAQPage",
+                "mainEntity": [
+                    {
+                        "@type": "Question",
+                        "name": "本当に無料ですか？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "はい、完全無料です。利用回数やファイルサイズの制限もありません。"
+                        }
+                    },
+                    {
+                        "@type": "Question",
+                        "name": "アップロードしたファイルは安全ですか？",
+                        "acceptedAnswer": {
+                            "@type": "Answer",
+                            "text": "はい、非常に安全です。100%ローカル処理（お使いのブラウザ上でのみ処理）されるため、ファイルがサーバーへ送信されることは一切ありません。"
+                        }
+                    }
+                ]
+            }
+        ]
+    }
+    </script>
+</head>
+<body>
+    <header class="header">
+        <div class="container header-inner">
+            <div class="logo">
+                <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i>
+                <span>EasyPDFCompress</span>
+            </div>
+            <div class="header-controls">
+                <button id="darkModeToggle" aria-label="ダークモード切替" class="btn-icon">
+                    <i class="fa-solid fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section id="hero" class="hero section-padding">
+            <div class="container text-center">
+                <h1 class="hero-title">安全で高速な<br class="mobile-only">PDF圧縮ツール</h1>
+                <p class="hero-subtitle">
+                    サーバーへのアップロード不要。あなたのデバイス上で直接PDFのファイルサイズを軽量化します。<br>完全無料で登録も不要です。
+                </p>
+                <div class="trust-badges">
+                    <span class="badge"><i class="fa-solid fa-shield-halved"></i> 100%ローカル処理</span>
+                    <span class="badge"><i class="fa-solid fa-server" style="text-decoration: line-through;"></i> サーバー送信なし</span>
+                    <span class="badge"><i class="fa-solid fa-check-circle"></i> 登録不要・完全無料</span>
+                </div>
+            </div>
+        </section>
+
+        <section id="tool" class="tool-section container">
+            <div class="tool-card shadow-lg">
+                <div id="uploadStep" class="step-container active">
+                    <div id="dropzone" class="dropzone">
+                        <input type="file" id="fileInput" accept="application/pdf" hidden>
+                        <i class="fa-regular fa-file-pdf dropzone-icon"></i>
+                        <h3>PDFファイルをここにドロップ</h3>
+                        <p>または</p>
+                        <button class="btn btn-primary" onclick="document.getElementById('fileInput').click()">
+                            ファイルを選択
+                        </button>
+                    </div>
+                </div>
+
+                <div id="processingStep" class="step-container">
+                    <div class="file-info">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span id="fileName">document.pdf</span>
+                        <span id="fileSizeOriginal" class="badge badge-gray">0 MB</span>
+                    </div>
+
+                    <div class="compression-options">
+                        <h4>圧縮レベルを選択</h4>
+                        <div class="options-grid">
+                            <label class="option-card">
+                                <input type="radio" name="compressionLevel" value="low">
+                                <div class="option-content">
+                                    <span class="option-title">低圧縮</span>
+                                    <span class="option-desc">高画質・ファイルサイズ微減</span>
+                                </div>
+                            </label>
+                            <label class="option-card selected">
+                                <input type="radio" name="compressionLevel" value="recommended" checked>
+                                <div class="option-content">
+                                    <span class="option-title">推奨</span>
+                                    <span class="option-desc">画質とサイズの最適なバランス</span>
+                                </div>
+                            </label>
+                            <label class="option-card">
+                                <input type="radio" name="compressionLevel" value="max">
+                                <div class="option-content">
+                                    <span class="option-title">高圧縮</span>
+                                    <span class="option-desc">低画質・ファイルサイズ最小化</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="action-buttons">
+                        <button id="compressBtn" class="btn btn-primary btn-large w-100">
+                            PDFを圧縮する <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        <button id="cancelBtn" class="btn btn-text w-100 mt-2">キャンセル</button>
+                    </div>
+
+                    <div id="progressContainer" class="progress-container hidden">
+                        <div class="progress-header">
+                            <span>圧縮中...</span>
+                            <span id="progressText">0%</span>
+                        </div>
+                        <div class="progress-bar">
+                            <div id="progressBarFill" class="progress-fill"></div>
+                        </div>
+                        <p class="security-note"><i class="fa-solid fa-lock"></i> データはあなたのデバイス上から離れません</p>
+                    </div>
+                </div>
+
+                <div id="resultStep" class="step-container">
+                    <div class="success-header">
+                        <div class="success-icon">
+                            <i class="fa-solid fa-check"></i>
+                        </div>
+                        <h2>圧縮完了！</h2>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-box">
+                            <span class="stat-label">元のサイズ</span>
+                            <span id="statOriginal" class="stat-value">0 MB</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">圧縮後のサイズ</span>
+                            <span id="statCompressed" class="stat-value highlight">0 MB</span>
+                        </div>
+                        <div class="stat-box">
+                            <span class="stat-label">削減率</span>
+                            <span id="statSaved" class="stat-value highlight-green">0%</span>
+                        </div>
+                    </div>
+
+                    <div class="result-actions">
+                        <a id="downloadBtn" class="btn btn-primary btn-large w-100" download="compressed.pdf">
+                            <i class="fa-solid fa-download"></i> 圧縮されたPDFをダウンロード
+                        </a>
+                        <button id="resetBtn" class="btn btn-outline w-100 mt-3">
+                            <i class="fa-solid fa-rotate-right"></i> 別のファイルを圧縮する
+                        </button>
+                    </div>
+
+                    <div class="preview-container mt-4">
+                        <h4>PDFプレビュー</h4>
+                        <iframe id="pdfPreview" title="PDF Preview"></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="features section-padding bg-light">
+            <div class="container">
+                <h2 class="section-title text-center">選ばれる理由</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-user-shield"></i></div>
+                        <h3>究極のプライバシー</h3>
+                        <p>クラウドやサーバーへのアップロードは一切行いません。すべての圧縮処理はお使いのブラウザ（デバイス）内で完結するため、機密情報を含むPDFでも安心して利用できます。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-bolt"></i></div>
+                        <h3>超高速な処理</h3>
+                        <p>アップロード・ダウンロードの待ち時間ゼロ。ローカルの処理能力を活用するため、大容量のファイルでも瞬時に圧縮が完了します。</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon"><i class="fa-solid fa-sliders"></i></div>
+                        <h3>選べる圧縮レベル</h3>
+                        <p>用途に合わせて「低圧縮・推奨・高圧縮」から選択可能。画質を保持したい場合も、メール添付のために極限までサイズを小さくしたい場合にも対応します。</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="faq" class="faq section-padding">
+            <div class="container">
+                <h2 class="section-title text-center">よくある質問</h2>
+                <div class="faq-accordion">
+                    <div class="faq-item">
+                        <button class="faq-question">本当に無料で使えますか？ <i class="fa-solid fa-chevron-down"></i></button>
+                        <div class="faq-answer">
+                            <p>はい、完全無料です。利用回数やファイルサイズの制限、ウォーターマーク（透かし）の追加なども一切ありません。</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">アップロードしたファイルはどこに保存されますか？ <i class="fa-solid fa-chevron-down"></i></button>
+                        <div class="faq-answer">
+                            <p>どこにも保存されません。EasyPDFCompressはクライアントサイド技術を使用しており、ファイルはあなたのデバイスから一歩も外に出ません。サーバー通信自体が存在しないため、情報漏洩のリスクはゼロです。</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <button class="faq-question">スマートフォンやタブレットでも利用できますか？ <i class="fa-solid fa-chevron-down"></i></button>
+                        <div class="faq-answer">
+                            <p>はい、モバイル端末にも完全対応しています。iPhone、iPad、Androidなど、モダンなブラウザが動作する環境であればどこでもPDF容量削減が可能です。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="container text-center">
+            <div class="footer-logo">
+                <i class="fa-solid fa-file-compress"></i> EasyPDFCompress
+            </div>
+            <p class="copyright">&copy; 2026 EasyPDFCompress. 100% Client-Side PDF Compression.</p>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+    <script src="script.js"></script>
+</body>
+  </html>

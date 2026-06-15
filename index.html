@@ -77,18 +77,30 @@
 </head>
 <body>
     <header class="header">
-        <div class="container header-inner">
-            <div class="logo">
-                <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i>
-                <span>EasyPDFCompress</span>
-            </div>
-            <div class="header-controls">
-                <button id="darkModeToggle" aria-label="ダークモード切替" class="btn-icon">
-                    <i class="fa-solid fa-moon"></i>
-                </button>
-            </div>
+    <div class="container header-inner">
+        <!-- Logo par click karte hi user main page par aayega -->
+        <a href="/" class="logo" style="text-decoration: none;">
+            <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i>
+            <span>EasyPDFCompress</span>
+        </a>
+        
+        <!-- Yeh aapka naya aur asaan menu hai -->
+        <nav class="main-nav">
+            <ul style="display: flex; gap: 20px; list-style: none; margin: 0; align-items: center;">
+                <li><a href="/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">ホーム</a></li>
+                <li><a href="/faq/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">よくある質問</a></li>
+                <li><a href="/about/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">会社概要</a></li>
+                <li><a href="/contact/" style="text-decoration: none; color: var(--text-main); font-weight: 500;">お問い合わせ</a></li>
+            </ul>
+        </nav>
+        
+        <div class="header-controls">
+            <button id="darkModeToggle" aria-label="ダークモード切替" class="btn-icon">
+                <i class="fa-solid fa-moon"></i>
+            </button>
         </div>
-    </header>
+    </div>
+</header>
 
     <main>
         <section id="hero" class="hero section-padding">
@@ -262,14 +274,28 @@
         </section>
     </main>
 
-    <footer class="footer">
-        <div class="container text-center">
+<footer class="footer">
+    <div class="container">
+        <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 20px; margin-bottom: 20px;">
             <div class="footer-logo">
-                <i class="fa-solid fa-file-compress"></i> EasyPDFCompress
+                <i class="fa-solid fa-file-compress" style="color: var(--primary-color);"></i> EasyPDFCompress
             </div>
-            <p class="copyright">&copy; 2026 EasyPDFCompress. 100% Client-Side PDF Compression.</p>
+            
+            <!-- Yeh saare naye pages ke links hain jo niche dikhenge -->
+            <nav class="footer-nav">
+                <ul style="display: flex; flex-wrap: wrap; gap: 15px; list-style: none; padding: 0; margin: 0;">
+                    <li><a href="/about/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">About</a></li>
+                    <li><a href="/faq/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">FAQ</a></li>
+                    <li><a href="/contact/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Contact</a></li>
+                    <li><a href="/privacy-policy/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Privacy Policy</a></li>
+                    <li><a href="/terms/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Terms of Service</a></li>
+                    <li><a href="/disclaimer/" style="text-decoration: none; color: var(--text-muted); font-size: 0.9rem;">Disclaimer</a></li>
+                </ul>
+            </nav>
         </div>
-    </footer>
+        <p class="copyright text-center" style="margin: 0;">&copy; 2026 EasyPDFCompress. 100% Client-Side PDF Compression.</p>
+    </div>
+</footer>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
     <script src="script.js"></script>
